@@ -1,0 +1,3 @@
+// parameter file for SPH program
+
+verbose = 1

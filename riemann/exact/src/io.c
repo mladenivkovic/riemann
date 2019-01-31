@@ -1,17 +1,20 @@
-#include "params.h"
-#include "riemann.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "gas.h"
+#include "params.h"
+#include "riemann.h"
+
 #define MAX_LINE_SIZE 200
 
 
-/* ====================================================================== */
-/* This function reads in the command line arguments and stores them in   */
-/* the globalparams struct                                                */
-/* ====================================================================== */
+/* ======================================================== */
 void read_cmdlineargs(int argc, char* argv[], params* p){
+/* ======================================================== */
+  /* This function reads in the command line arguments and  */
+  /* stores them in the globalparams struct                 */
+  /*--------------------------------------------------------*/
 
   if (argc < 3){
     printf("Too few arguments given. Run this program with ./riemann paramfile datafile\n");
@@ -22,14 +25,17 @@ void read_cmdlineargs(int argc, char* argv[], params* p){
     strcpy(p->datafilename, argv[2]);
   };
 
+  printf("Started computation for initial conditions file %s\n", p->datafilename);
+
 }
 
 
 
-/* ====================================================================== */
-/* Read in initial conditions file, store read states.                    */
-/* ====================================================================== */
+/* ======================================================== */
 void read_ic(params* p, state* left, state* right){
+/* ======================================================== */
+  /* Read in initial conditions file, store read states.    */
+  /*--------------------------------------------------------*/
 
   //open file
   FILE *par = fopen(p->datafilename, "r");
@@ -108,26 +114,15 @@ void read_ic(params* p, state* left, state* right){
   fclose(par);
 
 
-
-  if (p->verbose) {
-    
-    printf(" Initial conditions are:\n");
-    printf("        Left                 Right\n");
-    printf(" rho =  %20.8lf %20.8lf \n", left->rho, right->rho);
-    printf(" u   =  %20.8lf %20.8lf \n", left->u, right->u);
-    printf(" p   =  %20.8lf %20.8lf \n", left->p, right->p);
-    printf("=======================================================================\n");
-
-  }
-
 }
 
 
 
-/* ====================================================================== */
-/* Read in parameter file, store read in global parameters.               */
-/* ====================================================================== */
-void read_paramfile(params* p){
+/* ============================================================ */
+void read_paramfile(params* p, constants* c){
+/* ============================================================ */
+  /* Read in parameter file, store read in global parameters.   */
+  /*------------------------------------------------------------*/
 
   /* globalparams * g = &(p->gp); */
   /* units *u = &(p->units); */
@@ -154,9 +149,7 @@ void read_paramfile(params* p){
   // gets n characters from file in filepointer and stores them
   // in str_buff.
   // returns 0 if EoF is reached.
-  
   {
-  
     // check whether tempbuff is empty line
     int isempty = 0;
     for (int i = 0; i<MAX_LINE_SIZE; i++){
@@ -179,18 +172,10 @@ void read_paramfile(params* p){
 
     if (strcmp(varname,"verbose") == 0) {
       p->verbose = atoi(varvalue);
-    // atoi/atof: convert string to integer/float
-    // from stdlib.h
     } 
-    /* else if (strcmp(varname, "unit_m")==0){ */
-    /*   u->unit_m = atof(varvalue); */
-    /* } */
-    /* else if (strcmp(varname, "unit_l")==0){ */
-    /*   u->unit_l = atof(varvalue); */
-    /* } */
-    /* else if (strcmp(varname, "unit_t")==0){ */
-    /*   u->unit_t = atof(varvalue); */
-    /* } */
+    else if (strcmp(varname, "gamma")==0){
+      c->gamma = atof(varvalue);
+    }
     else if (strcmp(varname, "//")==0) {
       // ignore comments
       continue;
@@ -204,6 +189,6 @@ void read_paramfile(params* p){
     }
   }
 
-    fclose(par);
+  fclose(par);
 
 }

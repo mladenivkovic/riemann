@@ -25,7 +25,7 @@ CC=gcc -I$(IDIR) -fopenmp
 
 
 # flags for gcc compiler
-CFLAGS= -g -Og -Wall -Wextra  -fsignaling-nans  -ffinite-math-only -fno-signed-zeros -Warray-bounds $(DEFINES) # debug
+CFLAGS= -g -Og -Wall -pedantic -std=c11 -Wextra  -fsignaling-nans  -ffinite-math-only -fno-signed-zeros -Warray-bounds $(DEFINES) # debug
 # CFLAGS= -O3  		 	   # performance
 
 
@@ -42,7 +42,7 @@ VPATH=$(SRCDIR)
 
 
 # OBJECTS = $(notdir $(patsubst %.c, %.o, $(wildcard $(SRCDIR)/*.c)))
-OBJECTS = main.o io.o params.o riemann.o
+OBJECTS = main.o io.o params.o riemann.o gas.o
 
 
 

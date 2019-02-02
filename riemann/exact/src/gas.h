@@ -3,11 +3,9 @@
 #ifndef GAS_H
 #define GAS_H
 
-typedef struct {
-  
-  double gamma;
-
-} constants;
+// typedef struct {
+//   double gamma;
+// } constants;
 
 
 typedef struct {
@@ -17,10 +15,9 @@ typedef struct {
 } state;
 
 
-
-
-extern void init_constants(constants* c);
+// extern void init_constants(constants* c);
 extern void init_states(state *left, state *right, state* starL, state* starR);
-extern double soundspeed(constants* c, state* s);
+extern double soundspeed(state* s);
+
 
 #endif

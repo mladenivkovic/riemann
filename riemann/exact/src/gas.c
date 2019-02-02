@@ -3,15 +3,17 @@
 
 #include "gas.h"
 
+extern double gamma;
+
 /* ========================================= */
-void init_constants(constants* c){
+/* void init_constants(constants* c){ */
 /* ========================================= */
   /* Initialize default values for constants */
   /*-----------------------------------------*/
-
-  c->gamma = 1.4;    /* 7/5 for diatomic ideal gas */
-
-}
+/*  */
+/*   c->gamma = 1.4;    [> 7/5 for diatomic ideal gas <] */
+/*  */
+/* } */
 
 
 
@@ -46,11 +48,9 @@ void init_states(state *left, state *right, state* starL, state* starR){
 
 
 /* ========================================= */
-double soundspeed(constants* c, state* s){
+double soundspeed(state* s){
 /* ========================================= */
   /* compute sound speed of ideal gas        */
   /*-----------------------------------------*/
-
-  return(sqrt(c->gamma * s->p / s->rho));
-
+  return(sqrt(gamma * s->p / s->rho));
 }

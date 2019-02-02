@@ -17,6 +17,9 @@
 #include "riemann.h"
 
 
+double gamma = 1.4; /* Ratio of specific heats; Adiabatic exponent... */
+
+
 /*==========================================================================*/
 void print_results(state* left, state* right, state* starL, state* starR){
 /*==========================================================================*/
@@ -40,19 +43,48 @@ int main(int argc, char* argv[]){
 /* ====================================== */
 
   params p;
-  constants c;
-  state left, right, starL, starR;
   init_params(&p);
-  init_constants(&c);
-  read_cmdlineargs(argc, argv, &p);
-  read_paramfile(&p, &c);
-  if (p.verbose) print_params(&p, &c);
 
+  /* constants c; */
+  /* init_constants(&c); */
+
+  state left, right, starL, starR;
   init_states(&left, &right, &starL, &starR);
+
+  read_cmdlineargs(argc, argv, &p);
+  read_paramfile(&p);
+  if (p.verbose) print_params(&p);
+
   read_ic(&p, &left, &right);
-  check_ic(&c, &left, &right);
-  compute_star_state(&c, &left, &right, &starL, &starR);
+  check_ic(&left, &right);
+
+
+
+  compute_star_state(&left, &right, &starL, &starR);
   print_results(&left, &right, &starL, &starR);
+
+  if (p.nsteps > 0) {
+  
+    double *X = malloc(p.nx*sizeof(double));
+    double *RHO = malloc(p.nx*sizeof(double));
+    double *U = malloc(p.nx*sizeof(double));
+    double *P = malloc(p.nx*sizeof(double));
+
+    /* initialize x values */
+    double dx = 2./(p.nx-1);
+    for (int i=0; i<p.nx; i++){
+      X[i] = i*dx - 1;
+    }
+    
+    for (int istep=0; istep<p.nsteps+1; istep++){
+      if (p.verbose) printf("Computing and writing output for step=%d\n", istep);
+      double t = ((double) istep)/((double) p.nsteps)*p.tmax;
+      compute_solution(t, X, RHO, U, P, &p, &left, &right, &starL, &starR);
+      write_output(istep, t, X, RHO, U, P, &p);
+    }
+
+
+  }
 
 
   return(0);

@@ -166,8 +166,30 @@ double dfpdp(double pguess, state *s, double gamma, double A, double B, double a
 
 
 
+/* ================================================================================ */
 void compute_solution(double t, double* x, double* rho, double* u, double* p, \
   params* par, state* left, state* right, state* starL, state* starR){
+/* ================================================================================ */
+  /* Compute the solution of the riemann problem at given time t for all x          */
+  /*--------------------------------------------------------------------------------*/
+
+  if(t==0){
+    for(int i=0; i<par->nx; i++){
+      if(x[i]<=0){
+        rho[i] = left->rho;
+        u[i] = left->u;
+        p[i] = left->p;
+      }
+      else {
+        rho[i] = right->rho;
+        u[i] = right->u;
+        p[i] = right->p;
+      }
+    }
+
+    return;
+  }
+
 
   for (int i=0; i<par->nx; i++){
     double S = x[i]/t;

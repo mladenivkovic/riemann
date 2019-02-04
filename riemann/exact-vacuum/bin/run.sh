@@ -24,13 +24,13 @@ genparamfile() {
 
 }
 
-# genparamfile 8 0.2
-# ./riemann-vacuum paramfile.txt ../ic/left_vacuum.dat
-# ../plot_riemann_solution.py left_vacuum
+genparamfile 8 0.2
+./riemann-vacuum paramfile.txt ../ic/left_vacuum.dat
+../plot_riemann_solution.py left_vacuum
 
-# genparamfile 8 0.2
-# ./riemann-vacuum paramfile.txt ../ic/right_vacuum.dat
-# ../plot_riemann_solution.py right_vacuum
+genparamfile 8 0.2
+./riemann-vacuum paramfile.txt ../ic/right_vacuum.dat
+../plot_riemann_solution.py right_vacuum
 
 genparamfile 8 0.2
 ./riemann-vacuum paramfile.txt ../ic/vacuum_generating.dat

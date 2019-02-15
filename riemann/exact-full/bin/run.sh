@@ -28,7 +28,11 @@ genparamfile 8 1
 ./riemann paramfile.txt ../ic/sod_test.dat
 ../plot_riemann_solution.py sod_test
 
-genparamfile 8 0.5
+genparamfile 8 0.1
+./riemann paramfile.txt ../ic/sod_test_modified.dat
+../plot_riemann_solution.py sod_test_modified
+
+genparamfile 8 0.2
 ./riemann paramfile.txt ../ic/123problem.dat
 ../plot_riemann_solution.py 123problem
 
@@ -44,15 +48,15 @@ genparamfile 8 0.1
 ./riemann paramfile.txt ../ic/two_shocks.dat
 ../plot_riemann_solution.py two_shocks
 
-genparamfile 8 0.2
-./riemann paramfile.txt ../ic/left_vacuum.dat
-../plot_riemann_solution.py left_vacuum
-
-genparamfile 8 0.2
-./riemann paramfile.txt ../ic/right_vacuum.dat
-../plot_riemann_solution.py right_vacuum
-
-genparamfile 8 0.2
-./riemann paramfile.txt ../ic/vacuum_generating.dat
-../plot_riemann_solution.py vacuum_generating
-
+# genparamfile 8 0.2
+# ./riemann paramfile.txt ../ic/left_vacuum.dat
+# ../plot_riemann_solution.py left_vacuum
+#
+# genparamfile 8 0.2
+# ./riemann paramfile.txt ../ic/right_vacuum.dat
+# ../plot_riemann_solution.py right_vacuum
+#
+# genparamfile 8 0.2
+# ./riemann paramfile.txt ../ic/vacuum_generating.dat
+# ../plot_riemann_solution.py vacuum_generating
+#

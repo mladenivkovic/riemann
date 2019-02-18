@@ -44,7 +44,7 @@ genparamfile 8 0.1
 ./riemann paramfile.txt ../ic/right_blast_wave.dat
 ../plot_riemann_solution.py right_blast_wave
 
-genparamfile 8 0.1
+genparamfile 8 0.035
 ./riemann paramfile.txt ../ic/two_shocks.dat
 ../plot_riemann_solution.py two_shocks
 
